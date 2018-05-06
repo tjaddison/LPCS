@@ -1,0 +1,1 @@
+[{"__symbolic":"module","version":4,"metadata":{},"exports":[{"from":"./msal-config","export":["MsalConfig"]},{"from":"./msal.service","export":["MsalService"]},{"from":"./msal.guard","export":["MsalGuard"]},{"from":"./msal.interceptor","export":["MsalInterceptor"]},{"from":"./msal.module","export":["MsalModule"]}]}]
