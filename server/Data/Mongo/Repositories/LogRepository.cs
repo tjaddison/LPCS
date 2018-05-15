@@ -3,8 +3,8 @@ using Xenvya.Core.Data.Mongo;
 
 namespace LPCS.Server.Data.Mongo.Repositories
 {
-    public class LogRepository : Repository<Profile>
+    public class LogRepository : Repository<Log>
 	{
-		public LogRepository(string connectionString) : base(connectionString) {}
+		public LogRepository(string connectionString, string collection) : base(connectionString, collection) {}
 	}
 }

@@ -8,3 +8,15 @@
 /Users/terrance/Projects/LPCS/server/obj/Debug/netcoreapp2.0/LPCS.Server.AssemblyInfo.cs
 /Users/terrance/Projects/LPCS/server/obj/Debug/netcoreapp2.0/LPCS.Server.dll
 /Users/terrance/Projects/LPCS/server/obj/Debug/netcoreapp2.0/LPCS.Server.pdb
+P:/sandbox/example/lpcs/server/obj/Debug/netcoreapp2.0/LPCS.Server.csproj.CoreCompileInputs.cache
+P:/sandbox/example/lpcs/server/obj/Debug/netcoreapp2.0/LPCS.Server.AssemblyInfoInputs.cache
+P:/sandbox/example/lpcs/server/obj/Debug/netcoreapp2.0/LPCS.Server.AssemblyInfo.cs
+P:/sandbox/example/lpcs/server/obj/Debug/netcoreapp2.0/LPCS.Server.dll
+P:/sandbox/example/lpcs/server/obj/Debug/netcoreapp2.0/LPCS.Server.pdb
+P:/sandbox/example/lpcs/server/bin/Debug/netcoreapp2.0/LPCS.Server.deps.json
+P:/sandbox/example/lpcs/server/bin/Debug/netcoreapp2.0/LPCS.Server.runtimeconfig.json
+P:/sandbox/example/lpcs/server/bin/Debug/netcoreapp2.0/LPCS.Server.runtimeconfig.dev.json
+P:/sandbox/example/lpcs/server/bin/Debug/netcoreapp2.0/LPCS.Server.dll
+P:/sandbox/example/lpcs/server/bin/Debug/netcoreapp2.0/LPCS.Server.pdb
+P:/sandbox/example/lpcs/server/obj/Debug/netcoreapp2.0/LPCS.Server.csprojResolveAssemblyReference.cache
+/Users/terrance/Projects/LPCS/server/obj/Debug/netcoreapp2.0/LPCS.Server.csprojResolveAssemblyReference.cache

@@ -5,6 +5,6 @@ namespace LPCS.Server.Data.Mongo.Repositories
 {
     public class MessageRepository : Repository<Profile>
 	{
-		public MessageRepository(string connectionString) : base(connectionString) {}
+		public MessageRepository(string connectionString, string collection) : base(connectionString, collection) {}
 	}
 }

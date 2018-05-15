@@ -97,9 +97,15 @@ namespace Xenvya.Core.Data.Mongo
         }
 
         private IFindFluent<T, T> Query()
-        {
+        {            
             return Collection.Find(Filter.Empty);
         }
+
+        private IFindFluent<T, T> Query(FilterDefinition<T> filterDefinition)
+        {          
+            return Collection.Find(filterDefinition);
+        }
+
         #endregion MongoSpecific
 
         #region CRUD
@@ -265,6 +271,64 @@ namespace Xenvya.Core.Data.Mongo
 
         #endregion Find
 
+        #region Find by FilterDefinition
+        
+        /// <summary>
+        /// find entities
+        /// </summary>
+        /// <param name="filterDefinition">filter definition</param>
+        /// <returns>collection of entity</returns>
+        public IEnumerable<T> Find(FilterDefinition<T> filterDefinition)
+        {
+            return Query(filterDefinition).ToEnumerable();
+        }
+
+        /// <summary>
+        /// find entities with paging
+        /// </summary>
+        /// <param name="filterDefinition">filter definition</param>
+        /// <param name="pageIndex">page index, based on 0</param>
+        /// <param name="size">number of items in page</param>
+        /// <returns>collection of entity</returns>
+        public IEnumerable<T> Find(FilterDefinition<T> filterDefinition, int pageIndex, int size)
+        {
+            return Find(filterDefinition, i => i.Id, pageIndex, size);
+        }
+
+        /// <summary>
+        /// find entities with paging and ordering
+        /// default ordering is descending
+        /// </summary>
+        /// <param name="filterDefinition">filter definition</param>
+        /// <param name="order">ordering parameters</param>
+        /// <param name="pageIndex">page index, based on 0</param>
+        /// <param name="size">number of items in page</param>
+        /// <returns>collection of entity</returns>
+        public IEnumerable<T> Find(FilterDefinition<T> filterDefinition, Expression<Func<T, object>> order, int pageIndex, int size)
+        {
+            return Find(filterDefinition, order, pageIndex, size, true);
+        }
+
+        /// <summary>
+        /// find entities with paging and ordering in direction
+        /// </summary>
+        /// <param name="filterDefinition">filter definition</param>
+        /// <param name="order">ordering parameters</param>
+        /// <param name="pageIndex">page index, based on 0</param>
+        /// <param name="size">number of items in page</param>
+        /// <param name="isDescending">ordering direction</param>
+        /// <returns>collection of entity</returns>
+        public IEnumerable<T> Find(FilterDefinition<T> filterDefinition, Expression<Func<T, object>> order, int pageIndex, int size, bool isDescending)
+        {
+            return Retry(() =>
+            {
+                var query = Query(filterDefinition).Skip(pageIndex * size).Limit(size);
+                return (isDescending ? query.SortByDescending(order) : query.SortBy(order)).ToEnumerable();
+            });
+        }
+
+        #endregion Find by FilterDefinition
+
         #region FindAll
 
         /// <summary>
@@ -287,8 +351,7 @@ namespace Xenvya.Core.Data.Mongo
         /// <returns>collection of entity</returns>
         public IEnumerable<T> FindAll(int pageIndex, int size)
         {
-            var foo = FindAll(i => i.Id, pageIndex, size);
-            return foo;
+            return FindAll(i => i.Id, pageIndex, size);
         }
 
         /// <summary>
@@ -365,6 +428,39 @@ namespace Xenvya.Core.Data.Mongo
         public T First(Expression<Func<T, bool>> filter, Expression<Func<T, object>> order, bool isDescending)
         {
             return Find(filter, order, 0, 1, isDescending).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// get first item in query
+        /// </summary>
+        /// <param name="filterDefinition">filter definition</param>
+        /// <returns>entity of <typeparamref name="T"/></returns>
+        public T First(FilterDefinition<T> filterDefinition)
+        {
+            return First(filterDefinition, i => i.Id);
+        }
+
+        /// <summary>
+        /// get first item in query with order
+        /// </summary>
+        /// <param name="filterDefinition">filter definition</param>
+        /// <param name="order">ordering parameters</param>
+        /// <returns>entity of <typeparamref name="T"/></returns>
+        public T First(FilterDefinition<T> filterDefinition, Expression<Func<T, object>> order)
+        {
+            return First(filterDefinition, order, false);
+        }
+
+        /// <summary>
+        /// get first item in query with order and direction
+        /// </summary>
+        /// <param name="filterDefinition">filter definition</param>
+        /// <param name="order">ordering parameters</param>
+        /// <param name="isDescending">ordering direction</param>
+        /// <returns>entity of <typeparamref name="T"/></returns>
+        public T First(FilterDefinition<T> filterDefinition, Expression<Func<T, object>> order, bool isDescending)
+        {
+            return Find(filterDefinition, order, 0, 1, isDescending).FirstOrDefault();
         }
 
         #endregion First
@@ -715,6 +811,20 @@ namespace Xenvya.Core.Data.Mongo
             });
         }
 
+        /// <summary>
+        /// validate if filter result exists
+        /// </summary>
+        /// <param name="filterDefinition">filter definition</param>
+        /// <returns>true if exists, otherwise false</returns>
+        public bool Any(FilterDefinition<T> filterDefinition)
+        {
+            return Retry(() =>
+            {
+                return First(filterDefinition) != null;
+            });
+        }
+
+
         #region Count
         /// <summary>
         /// get number of filtered documents
@@ -739,6 +849,32 @@ namespace Xenvya.Core.Data.Mongo
             return Retry(() =>
             {
                 return Collection.CountAsync(filter);
+            });
+        }
+
+        /// <summary>
+        /// get number of filtered documents
+        /// </summary>
+        /// <param name="filterDefinition">filter definition</param>
+        /// <returns>number of documents</returns>
+        public long Count(FilterDefinition<T> filterDefinition)
+        {
+            return Retry(() =>
+            {
+                return Collection.Count(filterDefinition);
+            });
+        }
+
+        /// <summary>
+        /// get number of filtered documents
+        /// </summary>
+        /// <param name="filterDefinition">filter definition</param>
+        /// <returns>number of documents</returns>
+        public Task<long> CountAsync(FilterDefinition<T> filterDefinition)
+        {
+            return Retry(() =>
+            {
+                return Collection.CountAsync(filterDefinition);
             });
         }
 
@@ -791,6 +927,9 @@ namespace Xenvya.Core.Data.Mongo
                 .Retry(3)
                 .Execute(action);
         }
+
+
+
         #endregion
     }
 }

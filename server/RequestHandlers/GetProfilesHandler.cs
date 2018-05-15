@@ -25,7 +25,7 @@ namespace LPCS.Server.RequestHandlers
                 throw new ArgumentNullException(nameof(request));
             }
 
-            var profiles = await _profileProvider.GetProfiles(page: request.Page, size: request.Size);
+            var profiles = await _profileProvider.GetProfiles(filter: request.F, page: request.Page, size: request.Size);
 
             var response = new GetProfilesResponse
             {

@@ -9,7 +9,7 @@ namespace LPCS.Server.Data.Mongo.Entities
         public string Website { get; set; }
         public string BusinessName { get; set; }
         public bool? UseBusinessNameForListing { get; set; }
-        public bool? IsActive { get; set; }
+        public bool IsActive { get; set; }
         public int? YearStarted { get; set; }
         public string LicenseNumber { get; set; }
         public string[] CredentialInitials { get; set; }

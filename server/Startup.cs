@@ -1,16 +1,12 @@
 ﻿using System.Text;
 using System.Threading.Tasks;
-using LPCS.Server.Data.SqlServer;
-using LPCS.Server.Core.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MediatR;
-using System.Reflection;
 using LPCS.Server.Providers;
 using LPCS.Server.Data.Mongo;
 
@@ -77,8 +73,8 @@ namespace LPCS.Server
             services.AddMvc();
 
             // Register application services
-            services.AddScoped<IUnitOfWork, MccUnitOfWork>();
             services.AddScoped<IProfileProvider, ProfileProvider>();
+            services.AddScoped<ILogProvider, LogProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

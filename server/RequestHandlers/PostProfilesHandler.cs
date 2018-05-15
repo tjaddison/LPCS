@@ -19,7 +19,7 @@ namespace LPCS.Server.RequestHandlers
 
         protected async override Task<PostProfilesResponse> HandleCore(PostProfilesRequest request)
         {
-            await _ProfileProvider.SaveProfile(request.Body);
+            await _ProfileProvider.CreateProfile(request.Body);
 
             var response = new PostProfilesResponse
             { 

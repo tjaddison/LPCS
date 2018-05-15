@@ -6,8 +6,8 @@ namespace LPCS.Server.Providers
 {
     public interface IProfileProvider
     {
-        Task<PagedResult<ProfileListItemModel>> GetProfiles(int page, int size);
+        Task<PagedResult<ProfileListItemModel>> GetProfiles(ProfileListFilterModel filter, int page, int size);
         ProfileModel GetProfileById(string id);
-        Task SaveProfile(ProfileModel model);
+        Task CreateProfile(ProfileModel model);
     }
 }

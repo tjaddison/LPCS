@@ -10,19 +10,20 @@ namespace LPCS.Server.Providers.DomainModels
         public string LastName { get; set; }
         public string MiddleName { get; set; }
         public string Email { get; set; }
-        public string Gender { get; set; }
-        public bool? IsActive { get; set; }
-        public bool? SendHtmlEmail { get; set; }
+        public string Gender { get; set; }        
         public string TitleType { get; set; }
-        public SupervisorProfile Supervisor { get; set; }
+
+        public SupervisorModel Supervisor { get; set; }
+        public SettingsModel Settings { get; set; }
+        public AccountModel Account { get; set; }
     }
 
-    public class SupervisorProfile
+    public class SupervisorModel
     {
         public string Website { get; set; }
         public string BusinessName { get; set; }
         public bool? UseBusinessNameForListing { get; set; }
-        public bool? IsActive { get; set; }
+        public bool IsActive { get; set; }
         public int? YearStarted { get; set; }
         public string LicenseNumber { get; set; }
         public string[] CredentialInitials { get; set; }
@@ -67,4 +68,18 @@ namespace LPCS.Server.Providers.DomainModels
         public int? Year { get; set; }
         public string Type { get; set; }
     }
+
+    public class SettingsModel
+    {
+        public bool SendHtmlEmail { get; set; } = false;
+
+    }
+
+    public class AccountModel 
+    {
+        public bool IsActive { get; set; }
+        public string StripeCustomerID { get; set; }
+    }
+
+    
 }

@@ -9,12 +9,14 @@ namespace LPCS.Server.Core.Web
         where TValidator : AbstractValidator<TRequest>, new()
         where TRequest : class
     {
+        public TBody Body { get; set; }
+
         #region For Validation
+
 
         private ValidationResult _validationResults;
         private TValidator _validator;
 
-        public TBody Body { get; set; }
 
         public bool IsValid
         {

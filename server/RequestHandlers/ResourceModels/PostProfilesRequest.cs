@@ -6,6 +6,6 @@ namespace LPCS.Server.RequestHandlers.ResourceModels
 {
     public class PostProfilesRequest : BasePostRequest<ProfileModel, PostProfilesRequest, PostProfilesResponse, PostProfilesRequestValidator>
     {
-     
+        
     }
 }
