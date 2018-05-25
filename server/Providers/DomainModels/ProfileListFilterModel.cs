@@ -4,7 +4,7 @@ namespace LPCS.Server.Providers.DomainModels
     {
         public string ke { get; set; }
         public string soBy { get; set; }
-        public int? mfd { get; set; }
+        public int? mfd { get; set; } = 20;
         public string mfz { get; set; }
         public string[] agSp { get; set; }
         public string[] et { get; set; }

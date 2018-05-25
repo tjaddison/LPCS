@@ -9,5 +9,6 @@ namespace LPCS.Server.Providers
         Task<PagedResult<ProfileListItemModel>> GetProfiles(ProfileListFilterModel filter, int page, int size);
         ProfileModel GetProfileById(string id);
         Task CreateProfile(ProfileModel model);
+        Task<ProfileFilterModel> GetProfileFilter(ProfileListFilterModel filter, int page, int size);
     }
 }

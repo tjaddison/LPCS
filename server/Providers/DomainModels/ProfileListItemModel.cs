@@ -5,9 +5,11 @@ namespace LPCS.Server.Providers.DomainModels
     public class ProfileListItemModel
     {
         public string ID { get; set; }     
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string MiddleName { get; set; }
-        public string Email { get; set; }
+        public string Title { get; set; }
+        public string Subtitle { get; set; }
+        public string Blurb { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string Zip { get; set; }
     }
 }

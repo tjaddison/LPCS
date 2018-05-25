@@ -12,9 +12,10 @@ namespace LPCS.Server.Data.Mongo.Entities
         public bool IsActive { get; set; }
         public int? YearStarted { get; set; }
         public string LicenseNumber { get; set; }
-        public string[] CredentialInitials { get; set; }
+        public string TherapistType { get; set; }        
         public string LicenseState { get; set; }
         public DateTime? LicenseExpirationDate { get; set; }
+        public string[] CredentialInitials { get; set; }
         public bool? UseVideoCounseling { get; set; }
         public string ClientDescription { get; set; }
         public string SpecialtyDescription { get; set; }
@@ -23,8 +24,8 @@ namespace LPCS.Server.Data.Mongo.Entities
         public string InstagramUrl { get; set; }
         public string LinkedInUrl { get; set; }
         public string FacebookUrl { get; set; }
-        public ICollection<Address> Addresses { get; set; }
-        public ICollection<LicenseCredential> LicenseCredentials { get; set; }
+        public Address[] Addresses { get; set; }
+        public LicenseCredential[] LicenseCredentials { get; set; }
         public string[] AgeSpecialties { get; set; }
         public string[] Ethnicities { get; set; }
         public string[] Events { get; set; }

@@ -9,7 +9,8 @@ namespace LPCS.Server.Data.Mongo
     {
         public ProfileRepository Profiles { get; }
         public MessageRepository Messages { get; }
-        public LogRepository Logs { get; }
+        public LogRepository Logs { get; }        
+        public LocationLookupRepository Locations  { get; }
 
         public LpcsMongoContext(string connectionString)
         {
@@ -27,6 +28,7 @@ namespace LPCS.Server.Data.Mongo
             );
 
             Logs = new LogRepository(connectionString, "logs");
+            Locations = new LocationLookupRepository(connectionString, "locationlookup");
         }
 
     }

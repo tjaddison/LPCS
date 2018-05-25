@@ -47,14 +47,14 @@ namespace LPCS.Server.Core.Web
 
         #region For Pagination
 
-        public int Page { get; set; } = 0;
-        public int Size { get; set; } = 10;
-        public IEnumerable<OrderItem> Orders { get; set; }
+        public int Pg { get; set; } = 0; // Page
+        public int Sz { get; set; } = 10; // Size
+        public IEnumerable<OrderItem> Odrs { get; set; } // Orders
 
         public abstract class OrderItem
         {
-            public string By { get; set; }
-            public string Direction { get; set; }
+            public string By { get; set; } // By
+            public string Dr { get; set; } // Direction
         }
 
         #endregion

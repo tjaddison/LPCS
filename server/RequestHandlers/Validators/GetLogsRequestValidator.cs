@@ -7,8 +7,8 @@ namespace LPCS.Server.RequestHandlers.Validators
     {
         public GetLogsRequestValidator()
         {
-            RuleFor(request => request.Page).Must(BeANonNegativeInterger).WithMessage("Please specifiy a Page value greater than or equal to zero.");
-            RuleFor(request => request.Size).Must(BeANonNegativeInterger).WithMessage("Please specifiy a Size value greater than or equal to zero.");
+            RuleFor(request => request.Pg).Must(BeANonNegativeInterger).WithMessage("Please specifiy a Page value greater than or equal to zero.");
+            RuleFor(request => request.Sz).Must(BeANonNegativeInterger).WithMessage("Please specifiy a Size value greater than or equal to zero.");
         }
 
         private bool BeANonNegativeInterger(int number)

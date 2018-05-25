@@ -25,7 +25,7 @@ namespace LPCS.Server.RequestHandlers
                 throw new ArgumentNullException(nameof(request));
             }
 
-            var Logs = await _LogProvider.GetLogs(page: request.Page, size: request.Size);
+            var Logs = await _LogProvider.GetLogs(page: request.Pg, size: request.Sz);
 
             var response = new GetLogsResponse
             {

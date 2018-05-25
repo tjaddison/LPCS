@@ -34,6 +34,16 @@ namespace LPCS.Server.Controllers
                 ProfileModel>(request);
         }
 
+        [HttpGet("filter")]
+        public async Task<IActionResult> GetFilter(GetProfileFilterRequest request)
+        {
+            return await ProcessGetRequest<
+                GetProfileFilterRequest, 
+                GetProfileFilterResponse, 
+                GetProfileFilterRequestValidator, 
+                ProfileFilterModel>(request);
+        }
+
         [HttpPost]
         public async Task Post([FromBody]PostProfilesRequest request)
         {
