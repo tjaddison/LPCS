@@ -10,7 +10,7 @@ namespace LPCS.Server.Data.Mongo.Entities
         public string State { get; set; }
         public string Zip { get; set; }
         public string Type { get; set; }        
-        public Location Location  { get; set; }
+         public Location Location  { get; set; }
     }
 
     public class Location

@@ -25,10 +25,36 @@ namespace LPCS.Server.Providers
             _mapper = mapper;
         }
 
+        public List<string> GetListOfZipCodes(ProfileListFilterModel filter)
+        {
+            var result = new List<string>();
+
+            //var filterDefinition = Builders<LocationLookup>.Filter.Ne(p=>p.Supervisor, null);
+
+            if(!string.IsNullOrEmpty(filter.mfz))
+            {
+                var location = GetLongLat(filter.mfz);  
+                var point = new GeoJson2DGeographicCoordinates(location.lg, location.lt);
+                var pnt = new GeoJsonPoint<GeoJson2DGeographicCoordinates>(point);
+                //Expression<Func<Profile,Profile>> fieldExpression = p => p.Supervisor.Addresses.Where(_ => _.Type.Equals("Primary"));
+
+                FieldDefinition<LocationLookup, string> field = "LocationLookup.Location";
+
+                //_context.Locations.Collection.Indexes.CreateOne(Builders<LocationLookup>.IndexKeys.Geo2DSphere(field));
+                
+                //var filterDefinition = Builders<LocationLookup>.Filter.NearSphere(p => p.Location, pnt, filter.mfd*10);
+                var filterDefinition =  Builders<LocationLookup>.Filter.NearSphere(field, pnt, filter.mfd*500);
+                var foo = _context.Locations.Collection.Find(filterDefinition);
+                //var s = "";
+            }
+
+            return result;
+        }
         public async Task<PagedResult<ProfileListItemModel>> GetProfiles(ProfileListFilterModel filter, int page, int size)
         {
             PagedResult<ProfileListItemModel> result = null;
 
+            
             var filterDefinition = CreateFilterDefinition(filter);          
 
             var cnt = await _context.Profiles.CountAsync(filterDefinition);               
@@ -77,7 +103,8 @@ namespace LPCS.Server.Providers
             {
                 var counts = new SortedDictionary<string,int>();
 
-                await _context.Profiles.Collection.Aggregate()
+                await _context.Profiles.Collection
+                    .Aggregate()
                     .Match(filterDefinition)
                     .Unwind(field)                    
                     .Group(new BsonDocument { { "_id", $"$Supervisor.{Regex.Replace(attributeName, @"\s+", "")}" }, { "count", new BsonDocument("$sum", 1) } })
@@ -109,7 +136,9 @@ namespace LPCS.Server.Providers
 
         private FilterDefinition<Profile> CreateFilterDefinition(ProfileListFilterModel filter)
         {
-            var filterDefinition = Builders<Profile>.Filter.Ne(p=>p.Supervisor, null);
+            //var f = GetListOfZipCodes(filter);
+
+             var filterDefinition = Builders<Profile>.Filter.Ne(p=>p.Supervisor, null);
             filterDefinition = filterDefinition & Builders<Profile>.Filter.Eq(p=>p.Account.IsActive, true);
             filterDefinition = filterDefinition & Builders<Profile>.Filter.Eq(p=>p.Supervisor.IsActive, true);
 
@@ -121,18 +150,21 @@ namespace LPCS.Server.Providers
                     filterDefinition = filterDefinition & Builders<Profile>.Filter.Text(filter.ke, new TextSearchOptions{ CaseSensitive = false });
                 }
 
-                if(!string.IsNullOrEmpty(filter.mfz))
-                {
-                    var location = GetLongLat(filter.mfz);  
-                    var point = new GeoJson2DGeographicCoordinates(location.lg, location.lt);
-                    var pnt = new GeoJsonPoint<GeoJson2DGeographicCoordinates>(point);
-                    //Expression<Func<Profile,Profile>> fieldExpression = p => p.Supervisor.Addresses.Where(_ => _.Type.Equals("Primary"));
+                // if(!string.IsNullOrEmpty(filter.mfz))
+                // {
+                //     var location = GetLongLat(filter.mfz);  
+                //     var point = new GeoJson2DGeographicCoordinates(location.lg, location.lt);
+                //     var pnt = new GeoJsonPoint<GeoJson2DGeographicCoordinates>(point);
+                //     //Expression<Func<Profile,Profile>> fieldExpression = p => p.Supervisor.Addresses.Where(_ => _.Type.Equals("Primary"));
 
-                    FieldDefinition<Profile, string> field = "car.manufacture";
+                //     FieldDefinition<Profile, string> field = "Supervisor.Addresses.Location";
 
-                    filterDefinition = filterDefinition & Builders<Profile>.Filter.NearSphere(p => p.Supervisor.Addresses, pnt, filter.mfd);
-                    filterDefinition = filterDefinition & Builders<Profile>.Filter.NearSphere()
-                }
+                    
+                //     //filterDefinition = filterDefinition & Builders<Profile>.Filter.NearSphere(p => p.Supervisor.Addresses, pnt, filter.mfd);
+                //     filterDefinition =  Builders<Profile>.Filter.NearSphere(field, pnt, filter.mfd);
+                //     //filterDefinition = filterDefinition & Builders<Profile>.Filter.NearSphere(p => p.Supervisor.Addresses.First().Location, pnt, filter.mfd);
+
+                // }
 
                 Action<Expression<Func<Profile, IEnumerable<string>>>, string[]> applyFilterDefinition = (fieldExpression, filterValue) => 
                 {
@@ -157,16 +189,18 @@ namespace LPCS.Server.Providers
 
         private (double lg, double lt) GetLongLat(string zip)
         {
+            var test = _context.Locations.FindAll();
+
             var result = (lg: 0.0, lt: 0.0);
 
-            var location =
+            var point =
                 (from l in _context.Locations.FindAll().AsQueryable()
-                where l.zip == zip
+                where l.ZipCode == zip
                 select l).FirstOrDefault();
 
-            if( location != null )
+            if( point != null )
             {
-                result = (lg: location.longitude, lt: location.latitude);
+                result = (lg: point.Location.Coordinates[0], lt: point.Location.Coordinates[1]);
             }
 
             return result;
