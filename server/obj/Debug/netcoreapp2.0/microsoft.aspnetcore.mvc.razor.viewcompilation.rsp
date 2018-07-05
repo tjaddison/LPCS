@@ -1,0 +1,5 @@
+/Users/terrance/Projects/LPCS/server
+--output-path=obj/Debug/netcoreapp2.0/
+--application-name=LPCS.Server
+--content-root=/Users/terrance/Projects/LPCS/server
+--file=
