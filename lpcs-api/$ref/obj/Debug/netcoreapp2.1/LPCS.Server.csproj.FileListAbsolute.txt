@@ -1,0 +1,11 @@
+/Users/terrance/Projects/LPCS/server/bin/Debug/netcoreapp2.1/LPCS.Server.deps.json
+/Users/terrance/Projects/LPCS/server/bin/Debug/netcoreapp2.1/LPCS.Server.runtimeconfig.json
+/Users/terrance/Projects/LPCS/server/bin/Debug/netcoreapp2.1/LPCS.Server.runtimeconfig.dev.json
+/Users/terrance/Projects/LPCS/server/bin/Debug/netcoreapp2.1/LPCS.Server.dll
+/Users/terrance/Projects/LPCS/server/bin/Debug/netcoreapp2.1/LPCS.Server.pdb
+/Users/terrance/Projects/LPCS/server/obj/Debug/netcoreapp2.1/LPCS.Server.csprojAssemblyReference.cache
+/Users/terrance/Projects/LPCS/server/obj/Debug/netcoreapp2.1/LPCS.Server.csproj.CoreCompileInputs.cache
+/Users/terrance/Projects/LPCS/server/obj/Debug/netcoreapp2.1/LPCS.Server.AssemblyInfoInputs.cache
+/Users/terrance/Projects/LPCS/server/obj/Debug/netcoreapp2.1/LPCS.Server.AssemblyInfo.cs
+/Users/terrance/Projects/LPCS/server/obj/Debug/netcoreapp2.1/LPCS.Server.dll
+/Users/terrance/Projects/LPCS/server/obj/Debug/netcoreapp2.1/LPCS.Server.pdb
